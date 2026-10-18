@@ -106,7 +106,9 @@ onMounted(async () => {
         :min-h="4"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer :header="`Profit over time ${botStore.botCount > 1 ? 'combined' : ''}`">
+        <DraggableContainer
+          :header="`${$t('Profit over time')}${botStore.botCount > 1 ? ` ${$t('combined')}` : ''}`"
+        >
           <PeriodBreakdown multi-bot-view />
         </DraggableContainer>
       </GridItem>

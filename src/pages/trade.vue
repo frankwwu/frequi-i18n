@@ -181,9 +181,9 @@ const tradingTabItems = computed<TabsItem[]>(() => {
           <TradeList
             class="open-trades"
             :trades="botStore.activeBot.openTrades"
-            title="Open trades"
+            :title="$t('Open trades')"
             :active-trades="true"
-            empty-text="Currently no open trades."
+            :empty-text="$t('Currently no open trades.')"
           />
         </DraggableContainer>
       </GridItem>
@@ -201,9 +201,9 @@ const tradingTabItems = computed<TabsItem[]>(() => {
           <TradeList
             class="trade-history"
             :trades="botStore.activeBot.closedTrades"
-            title="Trade history"
+            :title="$t('Trade history')"
             :show-filter="true"
-            empty-text="No closed trades so far."
+            :empty-text="$t('No closed trades so far.')"
           />
         </DraggableContainer>
       </GridItem>

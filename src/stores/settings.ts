@@ -19,6 +19,7 @@ const notificationDefaults = {
 export const useSettingsStore = defineStore(
   'uiSettings',
   () => {
+    const language = ref<'en' | 'zh-CN'>('en');
     const openTradesInTitle = ref<OpenTradeVizOptions>(OpenTradeVizOptions.showPill);
     const timezone = ref('UTC');
     const backgroundSync = ref(true);
@@ -61,6 +62,7 @@ export const useSettingsStore = defineStore(
     }
 
     return {
+      language,
       openTradesInTitle,
       timezone,
       backgroundSync,

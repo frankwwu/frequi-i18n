@@ -17,7 +17,7 @@ definePage({
     <h1 class="font-bold text-2xl sm:text-4xl mb-4 transition-all">
       Welcome to the <AppText class="text-2xl! sm:text-4xl!" />
     </h1>
-    <div>This page allows you to control your trading bot.</div>
+    <div>{{ $t('This page allows you to control your trading bot.') }}</div>
     <USeparator class="my-5" />
     <p class="mb-2">
       If you need any help, please refer to the
@@ -31,6 +31,6 @@ definePage({
       .
     </p>
 
-    <p class="mb-5">Have fun - <i>wishes you the Freqtrade team</i></p>
+    <p class="mb-5">{{ $t('Have fun -') }} <i>{{ $t('wishes you the Freqtrade team') }}</i></p>
   </div>
 </template>

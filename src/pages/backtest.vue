@@ -76,7 +76,7 @@ const backtestTabs = computed(() => {
     tabs.push({
       slot: 'historic-results',
       value: BtRunModes.historicresults,
-      label: 'Load Results',
+      label: translateUiText('Load Results'),
       icon: 'i-mdi-cloud-download',
       disabled: !botStore.activeBot.canRunBacktest,
     });
@@ -84,14 +84,14 @@ const backtestTabs = computed(() => {
   tabs.push({
     slot: 'run',
     value: BtRunModes.run,
-    label: 'Run backtest',
+    label: translateUiText('Run backtest'),
     icon: 'i-mdi-run-fast',
     disabled: !botStore.activeBot.canRunBacktest,
   });
   tabs.push({
     slot: 'results',
     value: BtRunModes.results,
-    label: 'Analyze result',
+    label: translateUiText('Analyze result'),
     icon: 'i-mdi-table-eye',
     disabled: !hasBacktestResult.value,
   });
@@ -99,7 +99,7 @@ const backtestTabs = computed(() => {
     tabs.push({
       slot: 'compare-results',
       value: BtRunModes.compareresults,
-      label: 'Compare results',
+      label: translateUiText('Compare results'),
       icon: 'i-mdi-compare-horizontal',
       disabled: !hasMultiBacktestResult.value,
     });
@@ -107,14 +107,14 @@ const backtestTabs = computed(() => {
   tabs.push({
     slot: 'visualize-summary',
     value: BtRunModes.visualizesummary,
-    label: 'Visualize summary',
+    label: translateUiText('Visualize summary'),
     icon: 'i-mdi-chart-bell-curve-cumulative',
     disabled: !hasBacktestResult.value,
   });
   tabs.push({
     slot: 'visualize',
     value: BtRunModes.visualize,
-    label: 'Visualize result',
+    label: translateUiText('Visualize result'),
     icon: 'i-mdi-chart-timeline-variant-shimmer',
     disabled: !hasBacktestResult.value,
   });
@@ -135,7 +135,7 @@ const backtestTabs = computed(() => {
       <div class="flex flex-col fixed">
         <UButton
           class="self-start"
-          aria-label="Close"
+          :aria-label="$t('Close')"
           color="neutral"
           variant="outline"
           :icon="showLeftBar ? 'mdi:chevron-left' : 'mdi:chevron-right'"
@@ -156,9 +156,9 @@ const backtestTabs = computed(() => {
       <!-- End Left bar -->
     </div>
     <div class="flex flex-col w-full">
-      <h2 class="ms-5 text-3xl font-bold">Backtesting</h2>
+      <h2 class="ms-5 text-3xl font-bold">{{ $t('Backtesting') }}</h2>
       <p v-if="!botStore.activeBot.canRunBacktest">
-        Bot must be in webserver mode to enable Backtesting.
+        {{ $t('Bot must be in webserver mode to enable Backtesting.') }}
       </p>
       <div class="w-full">
         <UTabs v-model="btFormMode" :items="backtestTabs">
