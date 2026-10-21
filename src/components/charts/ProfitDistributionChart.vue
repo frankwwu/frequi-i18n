@@ -14,6 +14,7 @@ import {
 } from 'echarts/components';
 
 import type { ClosedTrade } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 use([
   BarChart,
@@ -61,7 +62,7 @@ const data = computed(() => {
 const chartOptions = computed((): EChartsOption => {
   const chartOptionsLoc: EChartsOption = {
     title: {
-      text: 'Profit distribution',
+      text: translateUiText('Profit distribution'),
       left: 'center',
       show: props.showTitle,
     },
@@ -86,7 +87,7 @@ const chartOptions = computed((): EChartsOption => {
     },
     xAxis: {
       type: 'category',
-      name: 'Profit %',
+      name: translateUiText('Profit %'),
       nameLocation: 'middle',
       nameGap: 25,
     },
@@ -135,7 +136,7 @@ const chartOptions = computed((): EChartsOption => {
       class="z-2 absolute fixed-top flex items-center gap-10 ms-2 mt-1"
       :class="{ 'mx-auto': showTitle }"
       label-for="input-bins"
-      label="Bins"
+      :label="$t('Bins')"
       orientation="horizontal"
     >
       <USelect

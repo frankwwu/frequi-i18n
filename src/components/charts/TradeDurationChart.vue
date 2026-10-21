@@ -3,6 +3,7 @@ import ECharts from 'vue-echarts';
 import type { ClosedTrade } from '@/types';
 import type { EChartsOption } from 'echarts';
 import { format as echartsFormat } from 'echarts';
+import { translateUiText } from '@/utils/i18n';
 
 import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
@@ -70,7 +71,7 @@ const losingTrades = computed(() => {
 const chartOptions = computed((): EChartsOption => {
   return {
     title: {
-      text: 'Trades durations',
+      text: translateUiText('Trades durations'),
       left: 'center',
       show: props.showTitle,
     },
@@ -89,11 +90,11 @@ const chartOptions = computed((): EChartsOption => {
           config: {
             itemNameFormatter: (params) => {
               if (params.value === 0) {
-                return 'All trades';
+                return translateUiText('All Trades');
               } else if (params.value === 1) {
-                return 'Winning trades';
+                return translateUiText('Winning Trades');
               } else if (params.value === 2) {
-                return 'Losing trades';
+                return translateUiText('Losing Trades');
               }
             },
           },
@@ -113,7 +114,7 @@ const chartOptions = computed((): EChartsOption => {
     yAxis: [
       {
         type: 'value',
-        name: 'Trade duration',
+        name: translateUiText('Trade duration'),
         splitArea: {
           show: true,
         },
@@ -147,19 +148,19 @@ const chartOptions = computed((): EChartsOption => {
           {
             min: 0,
             max: 0,
-            label: 'All Trades',
+            label: translateUiText('All Trades'),
             color: '#5470c6',
           },
           {
             min: 1,
             max: 1,
-            label: 'Winning Trades',
+            label: translateUiText('Winning Trades'),
             color: '#12bb7b',
           },
           {
             min: 2,
             max: 2,
-            label: 'Losing Trades',
+            label: translateUiText('Losing Trades'),
             color: '#ef5350',
           },
         ],
@@ -167,7 +168,7 @@ const chartOptions = computed((): EChartsOption => {
     ],
     series: [
       {
-        name: 'Trade durations',
+        name: translateUiText('Trade durations'),
         type: 'boxplot',
         datasetId: 'allTradesBoxplot',
         colorBy: 'data',
@@ -176,7 +177,7 @@ const chartOptions = computed((): EChartsOption => {
         // },
       },
       {
-        name: 'outlier',
+        name: translateUiText('outlier'),
         type: 'scatter',
         datasetId: 'outlier',
       },

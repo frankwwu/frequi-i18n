@@ -237,7 +237,7 @@ function updateChart(initial = false) {
 
     series: [
       {
-        name: 'Candles',
+        name: translateUiText('Candles'),
         type: 'candlestick',
         barWidth: '80%',
         itemStyle: {
@@ -253,7 +253,7 @@ function updateChart(initial = false) {
         },
       },
       {
-        name: 'Volume',
+        name: translateUiText('Volume'),
         type: 'bar',
         xAxisIndex: 1,
         yAxisIndex: 1,
@@ -320,7 +320,7 @@ function updateChart(initial = false) {
         scale: true,
         gridIndex: 1,
         splitNumber: 2,
-        name: 'volume',
+        name: translateUiText('volume'),
         nameLocation: 'middle',
         position: props.labelSide,
         nameGap: NAMEGAP,
@@ -345,39 +345,39 @@ function updateChart(initial = false) {
     const signalConfigs = [
       {
         colData: colEntryData,
-        name: 'Entry',
+        name: translateUiText('Entry'),
         symbol: 'triangle',
         symbolSize: 10,
         color: buySignalColor,
-        tooltipPrefix: 'Long entry',
+        tooltipPrefix: translateUiText('Long entry'),
         colTooltip: colEnterTag,
       },
       {
         colData: colExitData,
-        name: 'Exit',
+        name: translateUiText('Exit'),
         symbol: 'diamond',
         symbolSize: 8,
         color: sellSignalColor,
-        tooltipPrefix: 'Long exit',
+        tooltipPrefix: translateUiText('Long exit'),
         colTooltip: colExitTag,
       },
       {
         colData: colShortEntryData,
-        name: 'Entry',
+        name: translateUiText('Entry'),
         symbol: 'triangle',
         symbolSize: 10,
         symbolRotate: 180,
         color: shortEntrySignalColor,
-        tooltipPrefix: 'Short entry',
+        tooltipPrefix: translateUiText('Short entry'),
         colTooltip: colEnterTag,
       },
       {
         colData: colShortExitData,
-        name: 'Exit',
+        name: translateUiText('Exit'),
         symbol: 'pin',
         symbolSize: 8,
         color: shortexitSignalColor,
-        tooltipPrefix: 'Short exit',
+        tooltipPrefix: translateUiText('Short exit'),
         colTooltip: colExitTag,
       },
     ];

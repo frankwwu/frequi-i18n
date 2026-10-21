@@ -4,6 +4,7 @@ import ECharts from 'vue-echarts';
 
 import type { Trade } from '@/types';
 import type { EChartsOption } from 'echarts';
+import { translateUiText } from '@/utils/i18n';
 
 import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
@@ -66,7 +67,7 @@ const hourlyData = computed(() => {
 const hourlyChartOptions = computed((): EChartsOption => {
   return {
     title: {
-      text: 'Hourly Profit',
+      text: translateUiText('Hourly Profit'),
       show: props.showTitle,
     },
     backgroundColor: 'rgba(0, 0, 0, 0)',

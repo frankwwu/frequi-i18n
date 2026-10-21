@@ -133,10 +133,10 @@ watch(
       <div class="ms-1 md:ms-2 flex flex-wrap md:flex-nowrap items-center gap-1">
         <div class="flex flex-col md:flex-row md:gap-2">
           <div class="flex flex-row flex-wrap gap-2">
-            <small v-if="dataset" class="text-sm text-nowrap" title="Long entry signals"
+            <small v-if="dataset" class="text-sm text-nowrap" :title="$t('Long entry signals')"
               >Long entries: {{ dataset.enter_long_signals || dataset.buy_signals }}</small
             >
-            <small v-if="dataset" class="text-sm text-nowrap" title="Long exit signals"
+            <small v-if="dataset" class="text-sm text-nowrap" :title="$t('Long exit signals')"
               >Long exit: {{ dataset.exit_long_signals || dataset.sell_signals }}</small
             >
           </div>
@@ -154,7 +154,7 @@ watch(
         {{ pair || 'Pair' }}
       </div>
       <div class="w-4 h-4">
-        <UProgress v-if="isLoadingDataset" stroke-width="4" small label="Spinning" />
+        <UProgress v-if="isLoadingDataset" stroke-width="4" small :label="$t('Loading')" />
       </div>
     </div>
     <div class="h-full flex">
@@ -175,7 +175,7 @@ watch(
           :label-side="settingsStore.chartLabelSide"
         />
         <div v-else class="m-auto">
-          <UProgress v-if="isLoadingDataset" class="m-5 w-5 h-5" label="Spinning" />
+          <UProgress v-if="isLoadingDataset" class="m-5 w-5 h-5" :label="$t('Loading')" />
           <div v-else class="text-lg">
             {{ noDatasetText }}
           </div>

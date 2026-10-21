@@ -23,6 +23,7 @@ import type {
   Trade,
 } from '@/types';
 import type { ComputedRefWithControl } from '@vueuse/core';
+import { translateUiText } from '@/utils/i18n';
 
 use([
   BarChart,
@@ -39,7 +40,7 @@ use([
 ]);
 
 // Define Column labels here to avoid typos
-const CHART_PROFIT = 'Profit';
+const CHART_PROFIT = translateUiText('Profit');
 
 const props = withDefaults(
   defineProps<{
@@ -210,7 +211,7 @@ const cumProfitChartOptions: ComputedRefWithControl<EChartsOption> = computedWit
   () => {
     const chartOptionsLoc: EChartsOption = {
       title: {
-        text: 'Cumulative Profit',
+        text: translateUiText('Cumulative Profit'),
         left: 'center',
         show: props.showTitle,
       },

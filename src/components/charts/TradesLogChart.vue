@@ -17,6 +17,7 @@ import {
 } from 'echarts/components';
 
 import type { ClosedTrade } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 use([
   BarChart,
@@ -76,7 +77,7 @@ const chartOptions = computed((): EChartsOption => {
   const datazoomStart = chartData.value.length > 0 ? (1 - 50 / chartData.value.length) * 100 : 100;
   return {
     title: {
-      text: 'Trades log',
+      text: translateUiText('Trades log'),
       left: 'center',
       show: props.showTitle,
     },
@@ -93,7 +94,7 @@ const chartOptions = computed((): EChartsOption => {
         | ${echartsFormat.encodeHTML(params[0].data[5])} ${echartsFormat.encodeHTML(botName)}
         <br />
         ${echartsFormat.encodeHTML(params[0].data[4])}<br/>
-        Profit ${echartsFormat.encodeHTML(params[0].data[1])} %`;
+        ${echartsFormat.encodeHTML(translateUiText('Profit'))} ${echartsFormat.encodeHTML(params[0].data[1])} %`;
       },
       axisPointer: {
         type: 'line',

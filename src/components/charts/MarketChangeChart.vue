@@ -20,6 +20,7 @@ import { registerTransform } from 'echarts';
 
 import type { BacktestMarketChange } from '@/types';
 import type { EChartsOption } from 'echarts';
+import { translateUiText } from '@/utils/i18n';
 
 use([
   LineChart,
@@ -61,7 +62,7 @@ const marketChangeOptions: ComputedRef<EChartsOption> = computed(() => {
   const colRelMean = props.marketChangeData.columns.findIndex((el) => el === 'rel_mean');
   return {
     title: {
-      text: 'Market change %',
+      text: translateUiText('Market change %'),
       left: 'center',
       show: props.showTitle,
     },

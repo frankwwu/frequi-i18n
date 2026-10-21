@@ -20,6 +20,7 @@ import { registerTransform } from 'echarts';
 
 import type { TimeSummaryCols, TimeSummaryReturnValue } from '@/types';
 import type { EChartsOption, LinearGradientObject } from 'echarts';
+import { translateUiText } from '@/utils/i18n';
 
 use([
   BarChart,
@@ -101,7 +102,7 @@ const colorStops: LinearGradientObject = {
 const dailyChartOptions: ComputedRef<EChartsOption> = computed(() => {
   return {
     title: {
-      text: 'Daily profit',
+      text: translateUiText('Daily profit'),
       show: props.showTitle,
     },
     backgroundColor: 'rgba(0, 0, 0, 0)',

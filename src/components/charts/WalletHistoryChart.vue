@@ -19,6 +19,7 @@ import {
 
 import type { WalletHistoryPerBot } from '@/types';
 import type { EChartsOption, MarkLineComponentOption } from 'echarts';
+import { translateUiText } from '@/utils/i18n';
 
 use([
   LineChart,
@@ -126,18 +127,18 @@ const walletHistoryOptions: ComputedRef<EChartsOption> = computed(() => {
 
     const markLineData: MarkLineComponentOption['data'] = [
       {
-        name: 'Starting balance',
+        name: translateUiText('Starting balance'),
         yAxis: startingValue,
         emphasis: { disabled: true },
         label: {
           show: true,
           position: 'insideStartTop',
-          formatter: `Starting balance ${botName}`,
+          formatter: translateUiText('Starting balance {botName}', { botName }),
           color: captureLineColor,
         },
       },
       {
-        name: 'Zero',
+        name: translateUiText('Zero'),
         label: {
           show: false,
         },
@@ -151,13 +152,13 @@ const walletHistoryOptions: ComputedRef<EChartsOption> = computed(() => {
 
     if (shouldShowCaptureLine) {
       markLineData.push({
-        name: 'Capture start',
+        name: translateUiText('Capture start'),
         xAxis: captureStartTs,
         emphasis: { disabled: true },
         label: {
           show: true,
           position: 'insideEndTop',
-          formatter: `Capture start ${botName}`,
+          formatter: translateUiText('Capture start {botName}', { botName }),
           color: captureLineColor,
         },
         lineStyle: {
@@ -239,7 +240,7 @@ const walletHistoryOptions: ComputedRef<EChartsOption> = computed(() => {
 
   const option: EChartsOption = {
     title: {
-      text: 'Wallet Balance',
+      text: translateUiText('Wallet Balance'),
       left: 'center',
       show: props.showTitle,
     },
@@ -346,7 +347,7 @@ const walletHistoryOptions: ComputedRef<EChartsOption> = computed(() => {
     autoresize
   />
   <div v-else class="flex flex-col items-center justify-center h-full gap-2">
-    <p class="text-gray-500">No historic wallet data available.</p>
+    <p class="text-gray-500">{{ $t('No historic wallet data available.') }}</p>
     <p class="text-gray-500 text-sm">
       You may need to update your freqtrade version to have historic wallet balance data available.
     </p>

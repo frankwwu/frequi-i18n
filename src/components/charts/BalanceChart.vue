@@ -14,6 +14,7 @@ import { LabelLayout } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 
 import type { BalanceValues } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 use([
   PieChart,
@@ -42,7 +43,7 @@ const settingsStore = useSettingsStore();
 const balanceChartOptions = computed((): EChartsOption => {
   return {
     title: {
-      text: 'Balance',
+      text: translateUiText('Balance'),
       show: props.showTitle,
     },
     center: ['50%', '50%'],
