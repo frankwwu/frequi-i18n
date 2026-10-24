@@ -46,8 +46,8 @@ onMounted(() => {
     <div class="flex flex-row mb-1 items-center">
       <div class="me-2">
         <UButton
-          aria-label="Close"
-          title="Pair Navigation"
+          :aria-label="$t('Close')"
+          :title="$t('Pair Navigation')"
           color="neutral"
           variant="outline"
           :icon="isBarVisible.left ? 'mdi:chevron-left' : 'mdi:chevron-right'"
@@ -55,14 +55,14 @@ onMounted(() => {
         />
       </div>
       <span class="grow">
-        Graph will always show the latest values for the selected strategy. <br />
-        Timerange: {{ timerange }} - {{ strategy }}
+        {{ $t('Graph will always show the latest values for the selected strategy.') }} <br />
+        {{ $t('Timerange:') }} {{ timerange }} - {{ strategy }}
       </span>
       <div class="text-end">
         <UButton
-          aria-label="Close"
+          :aria-label="$t('Close')"
           variant="outline"
-          title="Trade Navigation"
+          :title="$t('Trade Navigation')"
           color="neutral"
           :icon="isBarVisible.right ? 'mdi:chevron-right' : 'mdi:chevron-left'"
           @click="isBarVisible.right = !isBarVisible.right"

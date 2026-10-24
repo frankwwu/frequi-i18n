@@ -5,7 +5,7 @@ const pairlistStore = usePairlistConfigStore();
 <template>
   <div class="flex flex-col sm:flex-row mb-2 gap-2">
     <UButton
-      title="Save configuration"
+      :title="$t('Save configuration')"
       variant="solid"
       icon="mdi:content-save"
       @click="pairlistStore.saveConfig(pairlistStore.config.name)"
@@ -30,12 +30,12 @@ const pairlistStore = usePairlistConfigStore();
       />
     </EditValue>
     <UButton
-      title="Evaluate pairlist"
+      :title="$t('Evaluate pairlist')"
       :disabled="pairlistStore.evaluating || !pairlistStore.pairlistValid"
       variant="solid"
       @click="pairlistStore.startPairlistEvaluation()"
       :loading="pairlistStore.evaluating"
-      label="Evaluate"
+      :label="$t('Evaluate')"
       icon="mdi:play-box-outline"
     />
   </div>

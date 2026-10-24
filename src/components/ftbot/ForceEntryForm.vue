@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ForceEnterPayload } from '@/types';
 import { OrderSides } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 export interface ForceEntryFormProps {
   pair?: string;
@@ -43,7 +44,7 @@ const availableStake = computed<number | undefined>(() => {
 const availableStakeText = computed<string | undefined>(() =>
   availableStake.value === undefined
     ? undefined
-    : `Available: ${formatPriceCurrency(
+    : `${translateUiText('Available:')} ${formatPriceCurrency(
         availableStake.value,
         botStore.activeBot.stakeCurrency,
         botStore.activeBot.stakeCurrencyDecimals,
@@ -77,12 +78,12 @@ function applyStakeRatio(ratio: number) {
 }
 
 const orderTypeOptions = [
-  { value: 'market', text: 'Market' },
-  { value: 'limit', text: 'Limit' },
+  { value: 'market', text: translateUiText('Market') },
+  { value: 'limit', text: translateUiText('Limit') },
 ];
 const orderSideOptions = [
-  { value: 'long', text: 'Long' },
-  { value: 'short', text: 'Short' },
+  { value: 'long', text: translateUiText('Long') },
+  { value: 'short', text: translateUiText('Short') },
 ];
 
 function checkFormValidity() {
@@ -141,14 +142,14 @@ botStore.activeBot.getBalance();
 
 <template>
   <UModal
-    :title="positionIncrease ? `Increasing position for ${pair}` : 'Force entering a trade'"
-    :description="positionIncrease ? 'Increase an existing position' : 'Manually enter a new trade'"
+    :title="$t(positionIncrease ? 'Increasing position for {pair}' : 'Force entering a trade', { pair })"
+    :description="$t(positionIncrease ? 'Increase an existing position' : 'Manually enter a new trade')"
   >
     <template #body>
       <form ref="form" class="space-y-4" @submit.prevent="handleEntry">
         <UFormField
           v-if="botStore.activeBot.botFeatures.forceEnterShort && botStore.activeBot.shortAllowed"
-          label="Order direction (Long or Short)"
+          :label="$t('Order direction (Long or Short)')"
         >
           <USegmentedControl
             v-model="orderSide"
@@ -160,7 +161,7 @@ botStore.activeBot.getBalance();
           />
         </UFormField>
 
-        <UFormField label="Pair" required>
+        <UFormField :label="$t('Pair')" required>
           <UInput
             v-model="selectedPair"
             :disabled="positionIncrease"
@@ -171,7 +172,7 @@ botStore.activeBot.getBalance();
           />
         </UFormField>
 
-        <UFormField label="Price [optional]">
+        <UFormField :label="$t('Price [optional]')">
           <UInputNumber
             v-model="price"
             show-buttons
@@ -187,7 +188,7 @@ botStore.activeBot.getBalance();
         </UFormField>
 
         <UFormField
-          :label="`Stake-amount in ${botStore.activeBot.stakeCurrency} [optional]`"
+          :label="$t('Stake-amount in {currency} [optional]', { currency: botStore.activeBot.stakeCurrency })"
           :hint="availableStakeText"
         >
           <div class="space-y-2">
@@ -227,7 +228,7 @@ botStore.activeBot.getBalance();
                   color="neutral"
                   variant="soft"
                   icon="mdi:close"
-                  title="Use the bot's configured stake amount"
+                  :title="$t('Use configured stake amount')"
                   :disabled="stakeAmount === undefined"
                   @click="stakeAmount = undefined"
                 />
@@ -238,7 +239,7 @@ botStore.activeBot.getBalance();
 
         <UFormField
           v-if="botStore.activeBot.botFeatures.forceEnterShort && botStore.activeBot.shortAllowed"
-          label="Leverage to apply [optional]"
+          :label="$t('Leverage to apply [optional]')"
         >
           <UInputNumber
             id="leverage-input"
@@ -252,7 +253,7 @@ botStore.activeBot.getBalance();
           />
         </UFormField>
 
-        <UFormField label="OrderType">
+        <UFormField :label="$t('OrderType')">
           <USegmentedControl
             v-model="ordertype"
             :items="orderTypeOptions"
@@ -265,7 +266,7 @@ botStore.activeBot.getBalance();
 
         <UFormField
           v-if="botStore.activeBot.botFeatures.forceEntryTag"
-          label="* Custom entry tag [optional]"
+          :label="$t('* Custom entry tag [optional]')"
         >
           <UInput id="enterTag-input" v-model="enterTag" class="w-full" />
         </UFormField>
@@ -273,8 +274,8 @@ botStore.activeBot.getBalance();
     </template>
     <template #footer>
       <div class="ms-auto flex justify-end gap-2">
-        <UButton color="neutral" @click="$emit('close', false)" icon="mdi:close"> Cancel </UButton>
-        <UButton @click="handleEntry" icon="mdi:check"> Enter Position </UButton>
+        <UButton color="neutral" @click="$emit('close', false)" icon="mdi:close">{{ $t('Cancel') }}</UButton>
+        <UButton @click="handleEntry" icon="mdi:check">{{ $t('Enter Position') }}</UButton>
       </div>
     </template>
   </UModal>

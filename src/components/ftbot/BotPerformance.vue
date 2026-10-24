@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { translateUiText } from '@/utils/i18n';
+
 const botStore = useBotStore();
 enum PerformanceOptions {
   performance = 'performance',
@@ -24,32 +26,32 @@ const performanceTable = computed<
 >(() => {
   const textLength = 17;
   const initialCol = {
-    [PerformanceOptions.performance]: { key: 'pair', label: 'Pair' },
+    [PerformanceOptions.performance]: { key: 'pair', label: translateUiText('Pair') },
     [PerformanceOptions.entryStats]: {
       key: 'enter_tag',
-      label: 'Enter tag',
+      label: translateUiText('Enter tag'),
       formatter: (v: unknown) => formatTextLen(v as string, textLength),
     },
     [PerformanceOptions.exitStats]: {
       key: 'exit_reason',
-      label: 'Exit Reason',
+      label: translateUiText('Exit Reason'),
       formatter: (v: unknown) => formatTextLen(v as string, textLength),
     },
     [PerformanceOptions.mixTagStats]: {
       key: 'mix_tag',
-      label: 'Mix Tag',
+      label: translateUiText('Mix Tag'),
       formatter: (v: unknown) => formatTextLen(v as string, textLength),
     },
   };
   return [
     initialCol[selectedOption.value],
-    { key: 'profit', label: 'Profit %' },
+    { key: 'profit', label: translateUiText('Profit %') },
     {
       key: 'profit_abs',
-      label: `Profit ${botStore.activeBot.botState?.stake_currency}`,
+      label: `${translateUiText('Profit')} ${botStore.activeBot.botState?.stake_currency}`,
       formatter: (v: unknown) => formatPrice(v as number, 5),
     },
-    { key: 'count', label: 'Count' },
+    { key: 'count', label: translateUiText('Count') },
   ];
 });
 
@@ -70,10 +72,10 @@ const performanceData = computed(() => {
 });
 
 const options = [
-  { value: PerformanceOptions.performance, text: 'Performance' },
-  { value: PerformanceOptions.entryStats, text: 'Entries' },
-  { value: PerformanceOptions.exitStats, text: 'Exits' },
-  { value: PerformanceOptions.mixTagStats, text: 'Mix Tag' },
+  { value: PerformanceOptions.performance, text: translateUiText('Performance') },
+  { value: PerformanceOptions.entryStats, text: translateUiText('Entries') },
+  { value: PerformanceOptions.exitStats, text: translateUiText('Exits') },
+  { value: PerformanceOptions.mixTagStats, text: translateUiText('Mix Tag') },
 ];
 
 function refreshSummary() {
@@ -111,7 +113,7 @@ watch(selectedOption, () => {
 <template>
   <div>
     <div class="mb-2">
-      <h3 class="me-auto text-2xl inline">Performance</h3>
+      <h3 class="me-auto text-2xl inline">{{ $t('Performance') }}</h3>
       <UButton class="float-end" color="neutral" icon="mdi:refresh" @click="refreshSummary" />
     </div>
     <USegmentedControl

@@ -91,7 +91,7 @@ const botStore = useBotStore();
         }}
       </span>
     </p>
-    <BaseCollapsible v-if="botStore.activeBot.strategy?.params" title="Strategy parameters">
+    <BaseCollapsible v-if="botStore.activeBot.strategy?.params" :title="$t('Strategy parameters')">
       <StrategyParameters :strategy="botStore.activeBot.strategy" class="m-3" />
     </BaseCollapsible>
     <USeparator class="my-5" />

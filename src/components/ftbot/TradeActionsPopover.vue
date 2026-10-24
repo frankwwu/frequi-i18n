@@ -63,7 +63,7 @@ function handleForceEntry(item: Trade) {
         class="btn-xs"
         size="sm"
         color="neutral"
-        title="Actions"
+        :title="$t('Actions')"
         icon="mdi:gesture-tap"
       />
       <template #content>
@@ -82,7 +82,7 @@ function handleForceEntry(item: Trade) {
           <UButton
             class="mt-1 w-full text-start"
             color="neutral"
-            label="Close Actions menu"
+            :label="$t('Close Actions menu')"
             icon="mdi:cancel"
             @click="popoverOpen = false"
           />

@@ -117,7 +117,7 @@ const combinedPairList = computed(() => {
         id="trade-filter"
         v-model="filterText"
         type="text"
-        placeholder="Filter"
+        :placeholder="$t('Filter')"
         class="w-full"
       />
     </div>

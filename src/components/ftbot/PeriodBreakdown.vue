@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TimeSummaryOptions } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 const botStore = useBotStore();
 const settingsStore = useSettingsStore();
@@ -13,17 +14,17 @@ const hasWeekly = computed(
 );
 
 const periodicBreakdownSelections = computed(() => {
-  const vals = [{ value: TimeSummaryOptions.daily, text: 'Days' }];
+  const vals = [{ value: TimeSummaryOptions.daily, text: translateUiText('Days') }];
   if (hasWeekly.value) {
-    vals.push({ value: TimeSummaryOptions.weekly, text: 'Weeks' });
-    vals.push({ value: TimeSummaryOptions.monthly, text: 'Months' });
+    vals.push({ value: TimeSummaryOptions.weekly, text: translateUiText('Weeks') });
+    vals.push({ value: TimeSummaryOptions.monthly, text: translateUiText('Months') });
   }
   return vals;
 });
 
 const absRelSelections = ref([
-  { value: 'abs_profit', text: 'Abs $' },
-  { value: 'rel_profit', text: 'Rel %' },
+  { value: 'abs_profit', text: translateUiText('Abs $') },
+  { value: 'rel_profit', text: translateUiText('Rel %') },
 ]);
 
 const selectedStats = computed(() => {
@@ -72,16 +73,16 @@ onMounted(() => {
 
 const tableColumns = computed(() => {
   const cols: { accessorKey: string; header: string }[] = [
-    { accessorKey: 'date', header: 'Day' },
-    { accessorKey: 'abs_profit', header: 'Profit' },
+    { accessorKey: 'date', header: translateUiText('Day') },
+    { accessorKey: 'abs_profit', header: translateUiText('Profit') },
     {
       accessorKey: 'fiat_value',
-      header: `In ${selectedStats.value.fiat_display_currency}`,
+      header: `${translateUiText('In')} ${selectedStats.value.fiat_display_currency}`,
     },
-    { accessorKey: 'trade_count', header: 'Trades' },
+    { accessorKey: 'trade_count', header: translateUiText('Trades') },
   ];
   if (botStore.activeBot.botFeatures.advancedDailyMetrics) {
-    cols.push({ accessorKey: 'rel_profit', header: 'Profit%' });
+    cols.push({ accessorKey: 'rel_profit', header: translateUiText('Profit%') });
   }
   return cols;
 });
@@ -97,7 +98,7 @@ watch(
 <template>
   <div class="flex flex-col h-full">
     <div v-if="!props.multiBotView" class="mb-2">
-      <h3 class="me-auto inline text-xl">{{ hasWeekly ? 'Period' : 'Daily' }} Breakdown</h3>
+      <h3 class="me-auto inline text-xl">{{ $t(hasWeekly ? 'Period' : 'Daily') }} {{ $t('Breakdown') }}</h3>
       <UButton class="float-end" color="neutral" icon="mdi:refresh" @click="refreshSummary" />
     </div>
     <div class="flex align-center justify-between">

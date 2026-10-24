@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import type { Lock } from '@/types';
 import type { TableColumn } from '@nuxt/ui';
+import { translateUiText } from '@/utils/i18n';
 
 const botStore = useBotStore();
 
 const columns: TableColumn<Lock>[] = [
-  { accessorKey: 'pair', header: 'Pair' },
-  { accessorKey: 'lock_end_timestamp', header: 'Until' },
-  { accessorKey: 'reason', header: 'Reason' },
-  { id: 'actions', header: 'Actions' },
+  { accessorKey: 'pair', header: translateUiText('Pair') },
+  { accessorKey: 'lock_end_timestamp', header: translateUiText('Until') },
+  { accessorKey: 'reason', header: translateUiText('Reason') },
+  { id: 'actions', header: translateUiText('Actions') },
 ];
 
 function removePairLock(item: Lock) {
@@ -16,7 +17,7 @@ function removePairLock(item: Lock) {
   if (item.id !== undefined) {
     botStore.activeBot.deleteLock(item.id);
   } else {
-    showAlert('This Freqtrade version does not support deleting locks.');
+    showAlert(translateUiText('This Freqtrade version does not support deleting locks.'));
   }
 }
 </script>
@@ -24,7 +25,7 @@ function removePairLock(item: Lock) {
 <template>
   <div>
     <div class="mb-2">
-      <label class="me-auto text-xl">Pair Locks</label>
+      <label class="me-auto text-xl">{{ $t('Pair Locks') }}</label>
       <UButton
         class="float-end"
         color="neutral"
@@ -47,7 +48,7 @@ function removePairLock(item: Lock) {
           class="btn-xs ms-1"
           size="sm"
           color="neutral"
-          title="Delete Lock"
+          :title="$t('Delete Lock')"
           icon="mdi:delete"
           @click="removePairLock(row.original)"
         />

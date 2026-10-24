@@ -53,7 +53,7 @@ const emitSelectedTimeframe = () => {
 <template>
   <USelect
     v-model="selectedTimeframe"
-    placeholder="Use strategy default"
+    :placeholder="$t('Use strategy default')"
     :size="size"
     :items="availableTimeframes"
     @change="emitSelectedTimeframe"

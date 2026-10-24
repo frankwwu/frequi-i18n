@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ForceExitPayload } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 const botStore = useBotStore();
 const { confirm } = useConfirmBox();
@@ -12,8 +13,8 @@ const isRunning = computed((): boolean => {
 
 async function handleStopBot() {
   const result = await confirm({
-    title: 'Stop Bot',
-    message: 'Stop the bot loop from running?',
+    title: translateUiText('Stop Bot'),
+    message: translateUiText('Stop the bot loop from running?'),
   });
   if (result) {
     botStore.activeBot.stopBot();
@@ -23,9 +24,10 @@ async function handleStopBot() {
 async function handleStopBuy() {
   if (
     await confirm({
-      title: 'Pause - Stop Entering',
-      message:
+      title: translateUiText('Pause - Stop Entering'),
+      message: translateUiText(
         'Freqtrade will continue to handle open trades, but will not enter new trades or increase position sizes. \nReally stop entering?',
+      ),
     })
   ) {
     botStore.activeBot.stopBuy();
@@ -35,8 +37,8 @@ async function handleStopBuy() {
 async function handleReloadConfig() {
   if (
     await confirm({
-      title: 'Reload Config',
-      message: 'Reload configuration (including strategy)?',
+      title: translateUiText('Reload Config'),
+      message: translateUiText('Reload configuration (including strategy)?'),
     })
   ) {
     botStore.activeBot.reloadConfig();
@@ -46,8 +48,8 @@ async function handleReloadConfig() {
 async function handleForceExit() {
   if (
     await confirm({
-      title: 'ForceExit all',
-      message: 'Really forceexit ALL trades?',
+      title: translateUiText('ForceExit all'),
+      message: translateUiText('Really forceexit ALL trades?'),
     })
   ) {
     const payload: ForceExitPayload = {
@@ -71,7 +73,7 @@ async function handleForceEntry() {
       size="xl"
       color="neutral"
       :disabled="!botStore.activeBot.isTrading || isRunning"
-      title="Start Trading"
+      :title="$t('Start Trading')"
       icon="mdi:play"
       @click="botStore.activeBot.startBot()"
     />
@@ -79,7 +81,7 @@ async function handleForceEntry() {
       size="xl"
       color="neutral"
       :disabled="!botStore.activeBot.isTrading || !isRunning"
-      title="Stop Trading - Also stops handling open trades."
+      :title="$t('Stop Trading - Also stops handling open trades.')"
       icon="mdi:stop"
       @click="handleStopBot()"
     />
@@ -87,7 +89,7 @@ async function handleForceEntry() {
       size="xl"
       color="neutral"
       :disabled="!botStore.activeBot.isTrading || !isRunning"
-      title="Pause (StopBuy) - Freqtrade will continue to handle open trades, but will not enter new trades or increase position sizes."
+      :title="$t('Pause (StopBuy) - Freqtrade will continue to handle open trades, but will not enter new trades or increase position sizes.')"
       icon="mdi:pause"
       @click="handleStopBuy()"
     />
@@ -95,7 +97,7 @@ async function handleForceEntry() {
       size="xl"
       color="neutral"
       :disabled="!botStore.activeBot.isTrading"
-      title="Reload Config - reloads configuration including strategy, resetting all settings changed on the fly."
+      :title="$t('Reload Config - reloads configuration including strategy, resetting all settings changed on the fly.')"
       icon="mdi:reload"
       @click="handleReloadConfig()"
     />
@@ -103,7 +105,7 @@ async function handleForceEntry() {
       color="neutral"
       size="xl"
       :disabled="!botStore.activeBot.isTrading"
-      title="Force exit all"
+      :title="$t('Force exit all')"
       icon="mdi:close-box-multiple"
       @click="handleForceExit()"
     />
@@ -112,9 +114,18 @@ async function handleForceEntry() {
       size="xl"
       color="neutral"
       :disabled="!botStore.activeBot.isTrading || !isRunning"
-      title="Force enter - Immediately enter a trade at an optional price. Exits are then handled according to strategy rules."
+      :title="$t('Force enter - Immediately enter a trade at an optional price. Exits are then handled according to strategy rules.')"
       icon="mdi:plus-box-multiple-outline"
       @click="handleForceEntry"
+    />
+    <UButton
+      v-if="botStore.activeBot.isWebserverMode && false"
+      size="xl"
+      color="neutral"
+      :disabled="botStore.activeBot.isTrading"
+      :title="$t('Start Trading mode')"
+      icon="mdi:play"
+      @click="botStore.activeBot.startTrade()"
     />
   </div>
 </template>

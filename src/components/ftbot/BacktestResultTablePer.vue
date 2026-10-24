@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ExitReasonResults, PairResult } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 type ResultsType = PairResult | ExitReasonResults;
 type ResultsTypeWithKey = ResultsType & { key?: string | string[] };
@@ -74,37 +75,37 @@ const tableColumns = computed(() => {
   perTagReason.value.forEach((col, i) => {
     cols.push({
       id: `key_${i}`,
-      header: col.label,
+      header: translateUiText(col.label),
       cell: ({ row }) => col.formatter(row.original['key'] as string, row.original),
     });
   });
 
   // Fixed metric columns
-  cols.push({ accessorKey: 'trades', header: 'Trades' });
+  cols.push({ accessorKey: 'trades', header: translateUiText('Trades') });
   cols.push({
     id: 'profit_mean',
-    header: 'Avg Profit %',
+    header: translateUiText('Avg Profit %'),
     cell: ({ row }) => formatPercent(row.original.profit_mean, 2),
   });
   cols.push({
     id: 'profit_total_abs',
-    header: `Tot Profit ${props.stakeCurrency}`,
+    header: `${translateUiText('Tot Profit')} ${props.stakeCurrency}`,
     cell: ({ row }) => formatPrice(row.original.profit_total_abs, props.stakeCurrencyDecimals),
   });
   cols.push({
     id: 'profit_total',
-    header: 'Tot Profit %',
+    header: translateUiText('Tot Profit %'),
     cell: ({ row }) => formatPercent(row.original.profit_total, 2),
   });
-  cols.push({ accessorKey: 'wins', header: 'Wins' });
-  cols.push({ accessorKey: 'draws', header: 'Draws' });
-  cols.push({ accessorKey: 'losses', header: 'Losses' });
+  cols.push({ accessorKey: 'wins', header: translateUiText('Wins') });
+  cols.push({ accessorKey: 'draws', header: translateUiText('Draws') });
+  cols.push({ accessorKey: 'losses', header: translateUiText('Losses') });
 
   // Dynamic additional metric columns
   metrics.value.forEach((col) => {
     cols.push({
       accessorKey: col.field,
-      header: col.header,
+      header: translateUiText(col.header),
       cell: ({ row }) =>
         col.is_ratio
           ? formatPercent(row.original[col.field as keyof ResultsTypeWithKey] as number, 2)

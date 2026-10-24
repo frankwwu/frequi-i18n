@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import type { LookaheadResult } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 const props = defineProps<{
   result: LookaheadResult;
 }>();
 
 const tableColumns = [
-  { accessorKey: 'strategy', header: 'Strategy', meta: { class: { td: 'font-mono' } } },
-  { accessorKey: 'has_bias', header: 'Has bias' },
-  { accessorKey: 'total_signals', header: 'Total signals' },
-  { accessorKey: 'biased_entry_signals', header: 'Biased entry signals' },
-  { accessorKey: 'biased_exit_signals', header: 'Biased exit signals' },
-  { accessorKey: 'biased_indicators', header: 'Biased indicators' },
+  { accessorKey: 'strategy', header: translateUiText('Strategy'), meta: { class: { td: 'font-mono' } } },
+  { accessorKey: 'has_bias', header: translateUiText('Has bias') },
+  { accessorKey: 'total_signals', header: translateUiText('Total signals') },
+  { accessorKey: 'biased_entry_signals', header: translateUiText('Biased entry signals') },
+  { accessorKey: 'biased_exit_signals', header: translateUiText('Biased exit signals') },
+  { accessorKey: 'biased_indicators', header: translateUiText('Biased indicators') },
 ];
 
 const tableData = computed(() => [
@@ -33,24 +34,23 @@ const tableData = computed(() => [
       color="success"
       class="py-2"
       icon="i-mdi-check-circle"
-      title="No lookahead bias detected"
-      description="The strategy produced consistent signals across the analyzed timeranges."
+      :title="$t('No lookahead bias detected')"
+      :description="$t('The strategy produced consistent signals across the analyzed timeranges.')"
     />
     <UAlert
       v-else
       color="error"
       class="py-2"
       icon="i-mdi-alert"
-      title="Lookahead bias detected"
-      description="The strategy produced different signals depending on the available data. Backtest
-        results for this strategy are likely unreliable."
+      :title="$t('Lookahead bias detected')"
+      :description="$t('The strategy produced different signals depending on the available data. Backtest results for this strategy are likely unreliable.')"
     />
 
     <div>
       <UTable :data="tableData" :columns="tableColumns">
         <template #has_bias-cell="{ row }">
           <UBadge :color="row.original.has_bias ? 'error' : 'success'" variant="subtle">
-            {{ row.original.has_bias ? 'Yes' : 'No' }}
+            {{ $t(row.original.has_bias ? 'Yes' : 'No') }}
           </UBadge>
         </template>
         <template #biased_indicators-cell="{ row }">

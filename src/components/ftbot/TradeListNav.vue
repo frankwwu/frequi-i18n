@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Trade } from '@/types';
+import { translateUiText } from '@/utils/i18n';
 
 const props = withDefaults(
   defineProps<{
@@ -17,8 +18,8 @@ const selectedTrade = ref({} as Trade);
 const sortDescendingOrder = ref(true);
 const sortMethod = ref('openDate');
 const sortMethodOptions = [
-  { text: 'Open date', value: 'openDate' },
-  { text: 'Profit %', value: 'profit' },
+  { text: translateUiText('Open date'), value: 'openDate' },
+  { text: translateUiText('Profit %'), value: 'profit' },
 ];
 
 const onTradeSelect = (trade: Trade) => {
@@ -46,7 +47,7 @@ watch(
 <template>
   <div>
     <div class="flex justify-center">
-      <span class="me-2">Sort by:</span>
+      <span class="me-2">{{ $t('Sort by:') }}</span>
       <URadioGroup
         v-model="sortMethod"
         :items="sortMethodOptions.map((o) => ({ label: o.text, value: o.value }))"
@@ -60,10 +61,10 @@ watch(
         color="neutral"
         variant="ghost"
         class="w-full justify-center"
-        :title="'Trade Navigation'"
+        :title="$t('Trade Navigation')"
         @click="sortDescendingOrder = !sortDescendingOrder"
         :trailing-icon="sortDescendingOrder ? 'mdi:arrow-down' : 'mdi:arrow-up'"
-        >Trade Navigation
+        >{{ $t('Trade Navigation') }}
       </UButton>
       <li
         v-for="(trade, i) in sortedTrades"
@@ -112,7 +113,7 @@ watch(
           </div>
         </Transition>
       </li>
-      <div v-if="trades.length === 0">No trades to show...</div>
+      <div v-if="trades.length === 0">{{ $t('No trades to show...') }}</div>
     </ul>
   </div>
 </template>

@@ -49,7 +49,7 @@ function clickBacktest() {
 
 <template>
   <div class="mb-2">
-    <span>Strategy</span>
+    <span>{{ $t('Strategy') }}</span>
     <StrategySelect v-model="btStore.strategy"></StrategySelect>
   </div>
   <div
@@ -57,13 +57,13 @@ function clickBacktest() {
     :disabled="botStore.activeBot.backtestRunning"
   >
     <!-- Backtesting parameters -->
-    <h3 class="font-bold mb-2 col-span-2 text-center">Backtesting parameters</h3>
-    <label for="timeframe-select">Timeframe:</label>
+    <h3 class="font-bold mb-2 col-span-2 text-center">{{ $t('Backtesting parameters') }}</h3>
+    <label for="timeframe-select">{{ $t('Timeframe:') }}</label>
     <TimeframeSelect id="timeframe-select" v-model="btStore.selectedTimeframe" />
     <label for="timeframe-detail-select" class="flex justify-end items-center gap-2"
-      >Detail Timeframe:
+      >{{ $t('Detail Timeframe:') }}
       <InfoBox
-        hint="Detail timeframe, to simulate intra-candle results. Not setting this will not use this functionality."
+        :hint="$t('Detail timeframe, to simulate intra-candle results. Not setting this will not use this functionality.')"
       />
     </label>
     <TimeframeSelect
@@ -72,19 +72,19 @@ function clickBacktest() {
       :below-timeframe="btStore.selectedTimeframe"
     />
 
-    <label for="max-open-trades">Max open trades:</label>
+    <label for="max-open-trades">{{ $t('Max open trades:') }}</label>
     <UInputNumber
       id="max-open-trades"
       v-model="btStore.maxOpenTrades"
-      placeholder="Use strategy default"
+      :placeholder="$t('Use strategy default')"
       :increment="false"
       :decrement="false"
     ></UInputNumber>
-    <label for="starting-capital">Starting capital:</label>
+    <label for="starting-capital">{{ $t('Starting capital:') }}</label>
     <UInputNumber
       id="starting-capital"
       v-model="btStore.startingCapital"
-      placeholder="Use config default"
+      :placeholder="$t('Use config default')"
       :increment="false"
       :decrement="false"
       :step="10"
@@ -94,15 +94,15 @@ function clickBacktest() {
         maximumFractionDigits: 5,
       }"
     ></UInputNumber>
-    <label for="stake-amount-bool">Stake amount:</label>
+    <label for="stake-amount-bool">{{ $t('Stake amount:') }}</label>
     <div class="flex items-center">
       <BaseCheckbox class="basis-1/3" id="stake-amount-bool" v-model="btStore.stakeAmountUnlimited"
-        >Unlimited stake</BaseCheckbox
+        >{{ $t('Unlimited stake') }}</BaseCheckbox
       >
       <UInputNumber
         id="stake-amount"
         v-model="btStore.stakeAmount"
-        placeholder="Use strategy default"
+        :placeholder="$t('Use strategy default')"
         class="w-full"
         :step="10"
         :stepSnapping="false"
@@ -116,10 +116,10 @@ function clickBacktest() {
       ></UInputNumber>
     </div>
 
-    <label for="enable-protections">Enable Protections:</label>
+    <label for="enable-protections">{{ $t('Enable Protections:') }}</label>
     <BaseCheckbox id="enable-protections" v-model="btStore.enableProtections"></BaseCheckbox>
     <template v-if="botStore.activeBot.botFeatures.backtestFreqAI">
-      <label for="enable-cache">Cache Backtest results:</label>
+      <label for="enable-cache">{{ $t('Cache Backtest results:') }}</label>
       <BaseCheckbox id="enable-cache" v-model="btStore.allowCache"></BaseCheckbox>
     </template>
 
@@ -136,7 +136,7 @@ function clickBacktest() {
     ></TimeRangeSelect>
   </div>
 
-  <h3 class="mt-3 font-bold text-2xl">Backtesting summary</h3>
+  <h3 class="mt-3 font-bold text-2xl">{{ $t('Backtesting summary') }}</h3>
   <div class="flex flex-wrap md:flex-nowrap justify-between md:justify-center mt-2">
     <UButton
       id="start-backtest"
@@ -150,7 +150,7 @@ function clickBacktest() {
       class="mx-1"
       @click="clickBacktest"
     >
-      Start backtest
+      {{ $t('Start backtest') }}
     </UButton>
     <UButton
       color="neutral"
