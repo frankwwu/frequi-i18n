@@ -14,7 +14,7 @@ const botStore = useBotStore();
         active-class="underline"
         class="flex flex-col gap-1"
         to="/open_trades"
-        label="Trades"
+        :label="$t('Trades')"
         icon="mdi:folder-open"
       />
       <UButton
@@ -24,7 +24,7 @@ const botStore = useBotStore();
         active-class="underline"
         class="flex flex-col gap-1"
         to="/trade_history"
-        label="History"
+        :label="$t('History')"
         icon="mdi:folder-lock"
       />
       <UButton
@@ -34,7 +34,7 @@ const botStore = useBotStore();
         class="flex flex-col gap-1"
         active-class="underline"
         to="/pairlist"
-        label="Pairlist"
+        :label="$t('Pairlist')"
         icon="mdi:format-list-group"
       />
       <UButton
@@ -44,7 +44,7 @@ const botStore = useBotStore();
         active-class="underline"
         class="flex flex-col gap-1"
         to="/balance"
-        label="Balance"
+        :label="$t('Balance')"
         icon="mdi:bank"
       />
       <UButton
@@ -54,7 +54,7 @@ const botStore = useBotStore();
         class="flex flex-col gap-1"
         active-class="underline"
         to="/dashboard"
-        label="Dashboard"
+        :label="$t('Dashboard')"
         icon="mdi:view-dashboard-outline"
       />
     </div>

@@ -28,8 +28,8 @@ withDefaults(
     >
       <slot name="header">
         <div class="flex justify-center items-center gap-2">
-          {{ header }}
-          <InfoBox v-if="infoText" :hint="infoText" />
+          {{ $t(header) }}
+          <InfoBox v-if="infoText" :hint="$t(infoText)" />
         </div>
       </slot>
     </div>

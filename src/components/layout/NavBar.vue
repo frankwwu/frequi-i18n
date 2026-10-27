@@ -5,6 +5,7 @@ import type { AuthStorageWithBotId } from '@/types';
 import type { DropdownMenuItem, NavigationMenuItem } from '@nuxt/ui';
 import { breakpointsTailwind } from '@vueuse/core';
 import { useRoute } from 'vue-router';
+import { translateUiText } from '@/utils/i18n';
 
 const botStore = useBotStore();
 
@@ -15,10 +16,23 @@ const router = useRouter();
 const favicon = ref<Favico | undefined>(undefined);
 const pingInterval = ref<number>();
 const loginDialog = useLoginDialog();
+const languageOptions = [
+  { label: 'English', value: 'en' },
+  { label: '简体中文', value: 'zh-CN' },
+];
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
 
 const isMobile = breakpoints.smallerOrEqual('md');
+
+watch(
+  () => settingsStore.language,
+  (language, previousLanguage) => {
+    if (language !== previousLanguage) {
+      window.location.reload();
+    }
+  },
+);
 
 async function clickLogout() {
   botStore.removeBot(botStore.selectedBot);
@@ -105,46 +119,46 @@ type NavItem = NavigationMenuItem & { visible?: boolean; mobileOnly?: boolean };
 
 const navItems = computed<NavItem[]>(() => [
   {
-    label: 'Trade',
+    label: translateUiText('Trade'),
     to: '/trade',
     visible: !botStore.canRunBacktest,
     icon: 'i-mdi-currency-usd',
   },
   {
-    label: 'Dashboard',
+    label: translateUiText('Dashboard'),
     to: '/dashboard',
     visible: !botStore.canRunBacktest,
     icon: 'i-mdi-view-dashboard',
   },
   {
-    label: 'Chart',
+    label: translateUiText('Chart'),
     to: '/graph',
     icon: 'i-mdi-chart-line',
   },
   {
-    label: 'Logs',
+    label: translateUiText('Logs'),
     to: '/logs',
     icon: 'i-mdi-format-list-bulleted',
   },
   {
-    label: 'Settings',
+    label: translateUiText('Settings'),
     to: '/settings',
     mobileOnly: true,
     icon: 'i-mdi-cog',
   },
   {
-    label: 'Backtest',
+    label: translateUiText('Backtest'),
     to: '/backtest',
     visible: botStore.canRunBacktest,
     icon: 'i-mdi-currency-usd',
   },
   {
-    label: 'Analysis',
+    label: translateUiText('Analysis'),
     visible: botStore.canRunBacktest,
     icon: 'mdi:chart-timeline-variant-shimmer',
     children: [
       {
-        label: 'Recursive Analysis',
+        label: translateUiText('Recursive Analysis'),
         to: '/recursive_analysis',
         icon: 'i-mdi-magnify-scan',
         visible:
@@ -152,7 +166,7 @@ const navItems = computed<NavItem[]>(() => [
           botStore.activeBot.botFeatures.recursiveAnalysis,
       },
       {
-        label: 'Lookahead Analysis',
+        label: translateUiText('Lookahead Analysis'),
         to: '/lookahead_analysis',
         icon: 'i-mdi-chart-timeline-variant-shimmer',
         visible:
@@ -162,13 +176,13 @@ const navItems = computed<NavItem[]>(() => [
     ],
   },
   {
-    label: 'Download Data',
+    label: translateUiText('Download Data'),
     to: '/download_data',
     visible: botStore.isWebserverMode && botStore.activeBot.botFeatures.downloadDataView,
     icon: 'i-mdi-download',
   },
   {
-    label: 'Pairlist Config',
+    label: translateUiText('Pairlist Config'),
     to: '/pairlist_config',
     icon: 'i-mdi-format-list-numbered-rtl',
     visible:
@@ -189,19 +203,19 @@ const menuItems = computed<DropdownMenuItem[][]>(() => [
   ],
   [
     {
-      label: 'Settings',
+      label: translateUiText('Settings'),
       icon: 'i-mdi-cog',
       onSelect: () => router.push('/settings'),
     },
     {
-      label: layoutStore.layoutLocked ? 'Unlock Layout' : 'Lock Layout',
+      label: translateUiText(layoutStore.layoutLocked ? 'Unlock Layout' : 'Lock Layout'),
       icon: layoutStore.layoutLocked ? 'i-mdi-lock' : 'i-mdi-lock-open',
       onSelect: () => {
         layoutStore.layoutLocked = !layoutStore.layoutLocked;
       },
     },
     {
-      label: 'Reset Layout',
+      label: translateUiText('Reset Layout'),
       icon: 'i-mdi-lock-reset',
       onSelect: resetDynamicLayout,
     },
@@ -210,7 +224,7 @@ const menuItems = computed<DropdownMenuItem[][]>(() => [
     ? [
         [
           {
-            label: 'Logout',
+            label: translateUiText('Logout'),
             icon: 'i-mdi-logout',
             onSelect: clickLogout,
           },
@@ -222,7 +236,7 @@ const menuItems = computed<DropdownMenuItem[][]>(() => [
 function editBotLogin(botId: string) {
   const bot = botStore.botStores[botId];
   if (!bot) {
-    showAlert('Bot not found', 'warning');
+    showAlert(translateUiText('Bot not found'), 'warning');
     return;
   }
   const loginInfo: AuthStorageWithBotId = {
@@ -252,6 +266,13 @@ function editBotLogin(botId: string) {
               link: 'text-md',
             }"
           />
+          <USelect
+            v-model="settingsStore.language"
+            :items="languageOptions"
+            value-key="value"
+            class="w-32"
+            :aria-label="$t('Language')"
+          />
           <ThemeSelect />
         </div>
 
@@ -261,14 +282,14 @@ function editBotLogin(botId: string) {
           <div
             v-if="!settingsStore.confirmDialog"
             class="my-auto me-5 flex text-yellow-300"
-            title="Confirm dialog deactivated, Forced exits will be executed immediately. Be careful."
+            :title="$t('Confirm dialog deactivated, Forced exits will be executed immediately. Be careful.')"
           >
             <i-mdi-run-fast />
             <i-mdi-alert />
           </div>
           <div class="hidden md:flex md:flex-nowrap items-center nav-item me-2">
-            <span class="text-sm me-2" title="Bot name">
-              {{ (botStore.activeBot && botStore.activeBot.botName) || 'No bot selected' }}
+            <span class="text-sm me-2" :title="$t('Bot name')">
+              {{ (botStore.activeBot && botStore.activeBot.botName) || $t('No bot selected') }}
             </span>
             <BotEntry
               v-if="botStore.selectedBotObj"
@@ -279,7 +300,7 @@ function editBotLogin(botId: string) {
             />
             <BotSelect />
 
-            <ReloadControl class="me-3" title="Confirm Dialog deactivated." />
+            <ReloadControl class="me-3" :title="$t('Confirm Dialog deactivated.')" />
           </div>
           <div v-if="botStore.hasBots" class="flex items-center">
             <!-- Hide dropdown on xs, instead show below  -->
@@ -296,7 +317,7 @@ function editBotLogin(botId: string) {
             color="neutral"
             @click="loginDialog({})"
             icon="mdi:login"
-            >Login
+            >{{ $t('Login') }}
           </UButton>
         </div>
 
@@ -326,15 +347,22 @@ function editBotLogin(botId: string) {
                   orientation="vertical"
                 />
                 <USeparator class="my-2" />
-                <span>Version: {{ settingsStore.uiVersion }}</span>
+                <span>{{ $t('Version:') }} {{ settingsStore.uiVersion }}</span>
 
                 <div class="flex flex-row items-center justify-center">
                   <ThemeSelect show-text />
                 </div>
+                <USelect
+                  v-model="settingsStore.language"
+                  :items="languageOptions"
+                  value-key="value"
+                  class="w-full"
+                  :aria-label="$t('Language')"
+                />
                 <USeparator class="my-2" />
                 <div class="flex flex-row items-center">
-                  <span class="text-sm me-2" title="Bot name">
-                    {{ (botStore.activeBot && botStore.activeBot.botName) || 'No bot selected' }}
+                  <span class="text-sm me-2" :title="$t('Bot name')">
+                    {{ (botStore.activeBot && botStore.activeBot.botName) || $t('No bot selected') }}
                   </span>
                   <BotEntry
                     v-if="botStore.selectedBotObj"
