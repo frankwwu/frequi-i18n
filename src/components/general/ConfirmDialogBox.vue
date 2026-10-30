@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { translateUiText } from '@/utils/i18n';
+
 export interface ConfirmDialogBoxProps {
   title: string;
   description?: string;
@@ -7,9 +9,9 @@ export interface ConfirmDialogBoxProps {
   confirmText?: string;
 }
 withDefaults(defineProps<ConfirmDialogBoxProps>(), {
-  description: 'Confirmation',
-  cancelText: 'Cancel',
-  confirmText: 'Ok',
+  description: translateUiText('Confirmation'),
+  cancelText: translateUiText('Cancel'),
+  confirmText: translateUiText('Ok'),
 });
 defineEmits<{
   close: [value: boolean];
