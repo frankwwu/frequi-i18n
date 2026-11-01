@@ -15,7 +15,7 @@ const props = withDefaults(
 );
 const emit = defineEmits<{ loginResult: [value: boolean] }>();
 
-const defaultURL = window.location.origin || 'http://localhost:3000';
+const defaultURL = 'https://bb-adn-demo-1495.eastus2.cloudapp.azure.com';
 
 const router = useRouter();
 const route = useRoute();
@@ -165,18 +165,18 @@ onMounted(() => {
 
 <template>
   <form ref="formRef" novalidate @submit.stop.prevent="handleSubmit" @reset="handleReset">
-    <UFormField class="mb-4" label="Bot Name">
+    <UFormField class="mb-4" :label="$t('Bot Name')">
       <UInput
         v-model="auth.botName"
-        placeholder="Bot Name"
+        :placeholder="$t('Bot Name')"
         class="mt-1 block w-full"
         @keydown.enter="handleOk"
       />
     </UFormField>
     <UFormField
       class="mb-4"
-      label="API Url"
-      :error="urlState === false ? 'API URL is required.' : undefined"
+      :label="$t('API Url')"
+      :error="urlState === false ? $t('API URL is required.') : undefined"
     >
       <UInput
         id="url-input"
@@ -190,14 +190,14 @@ onMounted(() => {
         v-if="urlDuplicate"
         class="mt-2"
         color="warning"
-        title="This URL is already in use by another bot."
+        :title="$t('This URL is already in use by another bot.')"
       >
       </UAlert>
     </UFormField>
     <UFormField
       class="mb-4"
-      label="Username"
-      :error="nameState === false ? 'Name and Password are required.' : undefined"
+      :label="$t('Username')"
+      :error="nameState === false ? $t('Name and Password are required.') : undefined"
     >
       <UInput
         v-model="auth.username"
@@ -209,8 +209,8 @@ onMounted(() => {
     </UFormField>
     <UFormField
       class="mb-4"
-      label="Password"
-      :error="pwdState === false ? 'Invalid Password' : undefined"
+      :label="$t('Password')"
+      :error="pwdState === false ? $t('Invalid Password') : undefined"
     >
       <UInput
         v-model="auth.password"
@@ -225,31 +225,31 @@ onMounted(() => {
         v-if="errorMessage"
         class="mt-2 whitespace-pre-line"
         color="warning"
-        title="Login failed"
+        :title="$t('Login failed')"
       >
         <template #description>
           {{ errorMessage }}
           <span v-if="errorMessageCORS">
-            Please also check your bot's CORS configuration:
+            {{ $t("Please also check your bot's CORS configuration:") }}
             <a
               href="https://www.freqtrade.io/en/latest/rest-api/#cors"
               class="text-blue-500 underline"
-              >Freqtrade CORS documentation</a
+              >{{ $t('Freqtrade CORS documentation') }}</a
             >
           </span>
         </template>
       </UAlert>
     </div>
     <div class="flex justify-end gap-2 mt-4">
-      <UButton label="Reset" color="error" type="reset" />
+      <UButton :label="$t('Reset')" color="error" type="reset" />
       <UButton
         v-if="inModal"
-        label="Cancel"
+        :label="$t('Cancel')"
         color="neutral"
         type="button"
         @click="emitLoginResult(true)"
       />
-      <UButton label="Submit" color="primary" type="submit" icon="mdi:login" />
+      <UButton :label="$t('Submit')" color="primary" type="submit" icon="mdi:login" />
     </div>
   </form>
 </template>

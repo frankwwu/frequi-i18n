@@ -19,7 +19,7 @@ function loginResult(result: boolean) {
 </script>
 
 <template>
-  <UModal title="Login to your bot" description="Enter your bot credentials to connect">
+  <UModal :title="$t('Login to your bot')" :description="$t('Enter your bot credentials to connect')">
     <template #body>
       <BotLogin in-modal :existing-auth="loginInfo" @login-result="loginResult" />
     </template>
